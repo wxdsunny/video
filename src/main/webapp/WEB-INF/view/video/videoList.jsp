@@ -37,7 +37,7 @@
 
 
 
- $(function(){
+/*  $(function(){
 	$("#name1").click(function() {
 		var $check = $(":checkbox");
 		$check.each(function(i,d){
@@ -79,7 +79,7 @@
 	$(".newClass").click(function(){
 		return confirm("确定要删除这条记录吗");
 	})
-}) 
+})  */
     	
 /* 	function checkAll(x) {
 		var check = document.getElementsByName("check");
