@@ -11,30 +11,28 @@
 <title>Insert title here</title>
 <link href="${pageContext.request.contextPath }/css/bootstrap.min.css"
 	rel="stylesheet">
-	<style type="text/css">
-	.newClass{}
-	</style>
+	
 <script
 	src="${pageContext.request.contextPath }/js/jquery-1.12.4.min.js"></script>
 <script src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-    $(function(){
-    	$(".newClass").click(function(){
-    		return confirm("确定要删除这条记录吗");
-    	})
-    })
-</script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/css/jquery-confirm.css">
+
+
 </head>
 <body>
+<jsp:include page="/admin.jsp">
+     <jsp:param value="speaker" name="fromJsp"/>
+   </jsp:include>
 	<div class="container">
 		<div class="jumbotron">
 			<h2>主讲人列表-主讲人管理</h2>
 		</div>
 		<a
-			href="${pageContext.request.contextPath }/speaker/addSpeaker.action"
+			href="${pageContext.request.contextPath }/admin/speaker/addSpeaker.action"
 			class="btn btn-primary">添加用户</a>
 		<form class="form-inline" style="float: right;"
-			action="${pageContext.request.contextPath }/speaker/speakerList.action"
+			action="${pageContext.request.contextPath }/admin/speaker/speakerList.action"
 			method="post">
 			<div class="form-group">
 				<label for="exampleInputName1">名称</label> <input type="text"
@@ -67,14 +65,45 @@
 						<td>${speak.speakerName }</td>
 						<td>${speak.speakerJob }</td>
 						<td width="70%">${speak.speakerDescr }</td>
-						<td><a class="glyphicon glyphicon-edit" href="${pageContext.request.contextPath }/speaker/updateSpeaker.action?id=${speak.id}"></a></td>
-						<td><a class="glyphicon glyphicon-trash newClass" href="${pageContext.request.contextPath }/speaker/deleteSpeaker.action?id=${speak.id}"></a></td>
+						<td><a class="glyphicon glyphicon-edit" href="${pageContext.request.contextPath }/admin/speaker/updateSpeaker.action?id=${speak.id}"></a></td>
+						<td><a class="glyphicon glyphicon-trash newClass" onclick="deleteOne(this)" id="${speak.id}"></a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 		<pg:page
-			url="${pageContext.request.contextPath }/speaker/speakerList.action"></pg:page>
+			url="${pageContext.request.contextPath }/admin/speaker/speakerList.action"></pg:page>
 	</div>
 </body>
+
+<script type="text/javascript">
+function deleteOne(ele){
+	    $.confirm({
+	      title: '提醒!',
+	      content: '确定要删除吗',
+	      buttons: {
+	                  确定删除: function () {
+	             $.get(
+	            		"${pageContext.request.contextPath }/admin/speaker/deleteSpeaker.action",
+	            	    {"id":ele.id},
+	                    function(data){
+	                       $.alert('删除成功');
+	            	    	setTimeout(function() {
+								location.reload();
+							}, 2000);
+	                            }
+	            	   );  
+	          },
+	                   取消: {
+	              btnClass: 'btn-blue'	
+	           }
+	      }
+	  });   
+	/*   $.alert({
+		    title: 'Alert!',
+		    content: 'Simple alert!',
+		}); */
+};
+</script>
+ <script src="${pageContext.request.contextPath }/js/jquery-confirm.js"></script>
 </html>

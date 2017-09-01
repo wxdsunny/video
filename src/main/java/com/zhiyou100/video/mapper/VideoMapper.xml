@@ -415,7 +415,7 @@
 	<select id="statisticavg" resultMap="MyMap">
 		select v.*,c.course_name,AVG(v.video_play_times) average FROM video v LEFT JOIN
 		course c on v.course_id = c.id GROUP BY v.course_id ORDER BY
-		AVG(v.video_play_times) ASC;
+		c.id ASC;
 	</select>
 
 </mapper>

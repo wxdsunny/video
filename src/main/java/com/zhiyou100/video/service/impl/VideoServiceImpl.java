@@ -85,4 +85,12 @@ public class VideoServiceImpl implements VideoService {
 		vm.deleteByExample(example);
 	}
 
+	@Override
+	public List<Video> findVideoByCourse(Integer id) {
+		VideoExample example = new VideoExample();
+		example.createCriteria().andCourseIdEqualTo(id);
+		List<Video> list = vm.selectByExample(example );
+		return list;
+	}
+
 }

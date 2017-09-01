@@ -43,7 +43,7 @@
 	<div
 		style="align-content: center; height: 300px; width: 300px; top: 100px; margin: 200px auto;">
 		<img src="${pageContext.request.contextPath }/img/logo.png" />
-		<form action="${pageContext.request.contextPath }/login.action"
+		<form action="${pageContext.request.contextPath }/admin/login.action"
 			method="post" id="formId">
 			<div class="form-group">
 				<input type="text" class="form-control" placeholder="用户名"

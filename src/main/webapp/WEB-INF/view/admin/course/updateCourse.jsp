@@ -20,7 +20,7 @@
 			<h2>添加课程</h2>
 		</div>
 		<form class="form-horizontal"
-			action="${pageContext.request.contextPath }/course/updateCourse.action"
+			action="${pageContext.request.contextPath }/admin/course/updateCourse.action"
 			method="post">
 			<div class="form-group">
 				<label for="inputEmail3" class="col-sm-2 control-label">所属学科</label>

@@ -27,4 +27,6 @@ public interface VideoService {
 
 	void deleteVideoByArray(Integer[] arr);
 
+	List<Video> findVideoByCourse(Integer id);
+
 }

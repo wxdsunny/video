@@ -27,7 +27,6 @@ public class AdminInterceptor implements HandlerInterceptor{
 			req.getRequestDispatcher("/index.jsp").forward(req, arg1);
 			return false;
 		}
-		
 		return true;
 	}
 

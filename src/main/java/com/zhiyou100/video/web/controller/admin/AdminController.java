@@ -1,4 +1,4 @@
-package com.zhiyou100.video.web.controller;
+package com.zhiyou100.video.web.controller.admin;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,12 +15,12 @@ public class AdminController {
 	@Autowired
 	AdminService as;
 	
-	@RequestMapping("/login.action")
+	@RequestMapping("/admin/login.action")
 	public String login(String username,String password,HttpSession session,Model md){
 		String str = as.findAdmin(username,password);
 		if(str.equals("succeed")){
 			session.setAttribute("user", username);
-			return "forward:/admin.jsp";
+			return "redirect:/admin/video/videoList.action";
 		}else{
 			String st = "用户名或密码不正确";
 			md.addAttribute("st", st);
@@ -29,11 +29,10 @@ public class AdminController {
 	}
 	
 	
-/*	@RequestMapping("/delteteVideoByNumber.action")
-	public String deleteVideo(Integer[]arr){
-		System.out.println(11);
-		System.out.println(arr);
-		return null;
-	}*/
+	@RequestMapping("/admin/logout.action")
+	public String logout(HttpSession session){
+		session.removeAttribute("user");
+		return "/index.jsp";
+	}
 
 }

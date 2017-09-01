@@ -27,6 +27,9 @@
 <script src="${pageContext.request.contextPath }/js/echarts.js"></script>
 <script type="text/javascript"></script>
 <body>
+<jsp:include page="/admin.jsp">
+     <jsp:param value="statistic" name="fromJsp"/>
+   </jsp:include>
 	<div class="container">
 		<div class="jumbotron">
 			<h2>统计-统计分析</h2>
@@ -92,10 +95,9 @@
 			var nums = []; //销量数组（实际用来盛放Y坐标值）
 			var a;
 
-			$
-					.ajax({
+			$.ajax({
 						type : "post",
-						url : "${pageContext.request.contextPath }/statistic/statistic.action", //请求发送到TestServlet处
+						url : "${pageContext.request.contextPath }/admin/statistic/statistic.action", //请求发送到TestServlet处
 						data : {},
 						dataType : "json", //返回数据形式为json
 						success : function(result) {
@@ -103,16 +105,16 @@
 							if (result) {
 								for (var i = 0; i < result.length; i++) {
 									if(result[i].courseName==null){
-										a = result[i].average
+										 a = i; 
 									}else{
-									names.push(result[i].courseName);
+									 alert(result[i].courseName);
+									 names.push(result[i].courseName);
 									}
 									//挨个取出类别并填入类别数组
 								}
 								;
 								for (var i = 0; i < result.length; i++) {
-									if(result[i].average==a){
-										
+									if(a==i){
 									}else{
 									nums.push(result[i].average); //挨个取出销量并填入销量数组
 									}

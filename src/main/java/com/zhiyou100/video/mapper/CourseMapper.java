@@ -29,6 +29,9 @@ public interface CourseMapper {
     int updateByPrimaryKey(Course record);
     
     List<Course> selectAllCourse(Integer currentpage);
+    
     int selectCount();
+
+	List<Course> findCourseList(@Param("subjectId")Integer subjectId);
 
 }

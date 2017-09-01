@@ -23,7 +23,8 @@
 									and ${criterion.condition} #{criterion.value}
 								</when>
 								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
+									and ${criterion.condition} #{criterion.value}
+									and
 									#{criterion.secondValue}
 								</when>
 								<when test="criterion.listValue">
@@ -55,7 +56,8 @@
 									and ${criterion.condition} #{criterion.value}
 								</when>
 								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
+									and ${criterion.condition} #{criterion.value}
+									and
 									#{criterion.secondValue}
 								</when>
 								<when test="criterion.listValue">
@@ -73,7 +75,8 @@
 		</where>
 	</sql>
 	<sql id="Base_Column_List">
-		id, course_name, course_descr, insert_time, update_time, subject_id
+		id, course_name, course_descr, insert_time, update_time,
+		subject_id
 	</sql>
 	<select id="selectByExample" resultMap="BaseResultMap"
 		parameterType="com.zhiyou100.video.model.CourseExample">
@@ -108,12 +111,15 @@
 		</if>
 	</delete>
 	<insert id="insert" parameterType="com.zhiyou100.video.model.Course">
-		insert into course (id, course_name, course_descr,
+		insert into course (id,
+		course_name, course_descr,
 		insert_time, update_time, subject_id
 		)
-		values (#{id,jdbcType=INTEGER}, #{courseName,jdbcType=VARCHAR},
+		values
+		(#{id,jdbcType=INTEGER}, #{courseName,jdbcType=VARCHAR},
 		#{courseDescr,jdbcType=VARCHAR},
-		#{insertTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{subjectId,jdbcType=INTEGER}
+		#{insertTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP}, #{subjectId,jdbcType=INTEGER}
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="com.zhiyou100.video.model.Course">
@@ -195,11 +201,16 @@
 	<update id="updateByExample" parameterType="map">
 		update course
 		set id = #{record.id,jdbcType=INTEGER},
-		course_name = #{record.courseName,jdbcType=VARCHAR},
-		course_descr = #{record.courseDescr,jdbcType=VARCHAR},
-		insert_time = #{record.insertTime,jdbcType=TIMESTAMP},
-		update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-		subject_id = #{record.subjectId,jdbcType=INTEGER}
+		course_name =
+		#{record.courseName,jdbcType=VARCHAR},
+		course_descr =
+		#{record.courseDescr,jdbcType=VARCHAR},
+		insert_time =
+		#{record.insertTime,jdbcType=TIMESTAMP},
+		update_time =
+		#{record.updateTime,jdbcType=TIMESTAMP},
+		subject_id =
+		#{record.subjectId,jdbcType=INTEGER}
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
 		</if>
@@ -227,13 +238,23 @@
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.zhiyou100.video.model.Course">
 		update course
-		set course_name = #{courseName,jdbcType=VARCHAR},
-		course_descr = #{courseDescr,jdbcType=VARCHAR},
-		insert_time = #{insertTime,jdbcType=TIMESTAMP},
-		update_time = #{updateTime,jdbcType=TIMESTAMP},
-		subject_id = #{subjectId,jdbcType=INTEGER}
+		set
+		course_name = #{courseName,jdbcType=VARCHAR},
+		course_descr =
+		#{courseDescr,jdbcType=VARCHAR},
+		insert_time =
+		#{insertTime,jdbcType=TIMESTAMP},
+		update_time =
+		#{updateTime,jdbcType=TIMESTAMP},
+		subject_id =
+		#{subjectId,jdbcType=INTEGER}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
+
+
+
+
+
 
 	<resultMap id="myMap" type="com.zhiyou100.video.model.Course">
 		<id column="id" property="id" jdbcType="INTEGER" />
@@ -243,14 +264,45 @@
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
 		<result column="subject_id" property="subjectId" jdbcType="INTEGER" />
 		<result column="subject_name" property="subjectName" jdbcType="VARCHAR" />
+		<collection property="videoList" ofType="com.zhiyou100.video.model.Video">
+			<id column="id" property="id" jdbcType="INTEGER" />
+			<result column="video_title" property="videoTitle" jdbcType="VARCHAR" />
+			<result column="speaker_id" property="speakerId" jdbcType="INTEGER" />
+			<result column="speaker_name" property="speakerName" jdbcType="VARCHAR" />
+			<result column="course_id" property="courseId" jdbcType="INTEGER" />
+			<result column="course_name" property="courseName" jdbcType="VARCHAR" />
+			<result column="video_length" property="videoLength" jdbcType="INTEGER" />
+			<result column="video_image_url" property="videoImageUrl"
+				jdbcType="VARCHAR" />
+			<result column="video_url" property="videoUrl" jdbcType="VARCHAR" />
+			<result column="video_descr" property="videoDescr" jdbcType="VARCHAR" />
+			<result column="insert_time" property="insertTime" jdbcType="TIMESTAMP" />
+			<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+			<result column="video_play_times" property="videoPlayTimes"
+				jdbcType="INTEGER" />
+			<result column="average" property="average" />
+		</collection>
 	</resultMap>
 
-	<select id="selectAllCourse" resultMap="myMap"
-		parameterType="Integer">
+
+
+
+
+	<select id="selectAllCourse" resultMap="myMap" parameterType="Integer">
 		select course.*,s.subject_name from course left join subject s
-		on subject_id=s.id limit #{v},10
+		on
+		subject_id=s.id limit #{v},10
 	</select>
 	<select id="selectCount" resultType="Integer">
-		select count(*) from course left join subject s on subject_id=s.id
+		select count(*) from course
+		left join subject s on subject_id=s.id
 	</select>
+
+
+	<select id="findCourseList" parameterType="Integer" resultMap="myMap">
+		SELECT c.*,v.* FROM course c LEFT JOIN video v on v.course_id=c.id
+		LEFT JOIN subject s ON c.subject_id=s.id WHERE s.id=#{subjectId};
+	</select>
+
+
 </mapper>

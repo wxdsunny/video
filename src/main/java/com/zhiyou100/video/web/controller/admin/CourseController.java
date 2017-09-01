@@ -1,4 +1,4 @@
-package com.zhiyou100.video.web.controller;
+package com.zhiyou100.video.web.controller.admin;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import com.zhiyou100.video.service.CourseService;
 import com.zhiyou100.video.util.Page;
 
 @Controller
-@RequestMapping("/course")
+@RequestMapping("/admin/course")
 public class CourseController {
 	
 	@Autowired
@@ -25,19 +25,19 @@ public class CourseController {
 	public String courseList(Model md,@RequestParam(required=true,defaultValue="1",value="page")Integer currentpage){
 		Page<Course> page = cs.findAllCourse(currentpage);
 		md.addAttribute("page", page);
-		return "/course/courseList";
+		return "/admin/course/courseList";
 		
 	}
 	@RequestMapping(value="/addCourse.action",method=RequestMethod.GET)
 	public String addCourse(Model md){
 		List<Subject> subject = cs.findSubject();
 		md.addAttribute("subject", subject);
-		return "/course/addCourse";
+		return "/admin/course/addCourse";
 	}
 	@RequestMapping(value="/addCourse.action",method=RequestMethod.POST)
 	public String addCourse(Course course){
 		cs.addCourse(course);
-		return "redirect:/course/courseList.action";
+		return "redirect:/admin/course/courseList.action";
 	}
 	@RequestMapping(value="/updateCourse.action",method=RequestMethod.GET)
 	public String updateCourse(Model md,Integer id){
@@ -45,17 +45,17 @@ public class CourseController {
 		md.addAttribute("subject", subject);
 		Course course = cs.findOneCourse(id);
 		md.addAttribute("course", course);
-		return "/course/updateCourse";
+		return "/admin/course/updateCourse";
 	}
 	@RequestMapping(value="/updateCourse.action",method=RequestMethod.POST)
 	public String updateCourse(Course course){
 		cs.updateCourse(course);
-		return "redirect:/course/courseList.action";
+		return "redirect:/admin/course/courseList.action";
 	}
 	@RequestMapping(value="/delleteCourse.action")
 	public String deleteCourse(Integer id){
 		cs.deleteCourse(id);
-		return "redirect:/course/courseList.action";
+		return "redirect:/admin/course/courseList.action";
 	}
 
 }

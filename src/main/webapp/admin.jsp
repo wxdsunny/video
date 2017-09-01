@@ -27,17 +27,17 @@
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
 					<ul class="nav navbar-nav">
-						<li>
-							<a target="pageBox" href="${pageContext.request.contextPath }/video/videoList.action">视频管理</a>
+						<li ${param.fromJsp=="video" ? "class='active'" : "" } >
+							<a href="${pageContext.request.contextPath }/admin/video/videoList.action">视频管理</a>
 						</li>
-						<li>
-							<a target="pageBox" href="${pageContext.request.contextPath }/speaker/speakerList.action">主讲人管理</a>
+						<li  ${param.fromJsp=="speaker" ? "class='active'" : "" }>
+							<a href="${pageContext.request.contextPath }/admin/speaker/speakerList.action">主讲人管理</a>
 						</li>
-						<li>
-							<a target="pageBox" href="${pageContext.request.contextPath }/course/courseList.action">课程管理</a>
+						<li ${param.fromJsp=="course" ? "class='active'" : "" }>
+							<a href="${pageContext.request.contextPath }/admin/course/courseList.action">课程管理</a>
 						</li>
-						<li>
-							<a target="pageBox" href="${pageContext.request.contextPath }/statistic/statisticList.action">统计分析</a>
+						<li ${param.fromJsp=="statistic" ? "class='active'" : "" }>
+							<a href="${pageContext.request.contextPath }/admin/statistic/statisticList.action">统计分析</a>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav nav navbar-right">
@@ -45,14 +45,14 @@
 							<a href="#">${user}</a>
 						</li>
 						<li>
-							<a class="glyphicon glyphicon-log-in"></a>
+							<a class="glyphicon glyphicon-log-in" href="${pageContext.request.contextPath }/admin/logout.action"></a>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</nav>
-		<div class="embed-responsive embed-responsive-16by9">
+		<%-- <div class="embed-responsive embed-responsive-16by9">
 			<iframe class="embed-responsive-item" src="${pageContext.request.contextPath }/video/videoList.action" name="pageBox"></iframe>
-		</div>
+		</div> --%>
 </body>
 </html>

@@ -1,5 +1,6 @@
-package com.zhiyou100.video.web.controller;
+package com.zhiyou100.video.web.controller.admin;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zhiyou100.video.model.Course;
 import com.zhiyou100.video.model.Speaker;
@@ -16,7 +18,7 @@ import com.zhiyou100.video.service.VideoService;
 import com.zhiyou100.video.util.Page;
 
 @Controller
-@RequestMapping("/video")
+@RequestMapping("/admin/video")
 public class VideoController {
 
 	@Autowired
@@ -36,7 +38,7 @@ public class VideoController {
 		md.addAttribute("speaker", speaker);
 		md.addAttribute("course", course);
 		md.addAttribute("page", page);
-		return "/video/videoList";
+		return "/admin/video/videoList";
 
 	}
 	@RequestMapping(value="/addvideo.action",method=RequestMethod.GET)
@@ -45,17 +47,17 @@ public class VideoController {
 		List<Course> course = vs.findCourse();
 		md.addAttribute("speaker", speaker);
 		md.addAttribute("course", course);
-		return "/video/videoAdd";
+		return "/admin/video/videoAdd";
 	}
 	@RequestMapping(value="/addvideo.action",method=RequestMethod.POST)
 	public String addVideo(Model md,Video v){
 		vs.addVideo(v);
-		return "redirect:/video/videoList.action";
+		return "redirect:/admin/video/videoList.action";
 	}
 	@RequestMapping("/deletevideo.action")
 	public String deleteVideo(Integer id){
 		vs.deleteVideo(id);
-		return "redirect:/video/videoList.action";
+		return "redirect:/admin/video/videoList.action";
 	}
 	@RequestMapping(value="/updatevideo.action",method=RequestMethod.GET)
 	public String updateVideo(Integer id,Model md){
@@ -65,17 +67,18 @@ public class VideoController {
 		List<Course> course = vs.findCourse();
 		md.addAttribute("speaker", speaker);
 		md.addAttribute("course", course);
-		return "/video/updateVideo";
+		return "/admin/video/updateVideo";
 	}
 	@RequestMapping(value="/updatevideo.action",method=RequestMethod.POST)
 	public String updateVideo(Video v){
 		vs.updateVideo(v);
-		return "redirect:/video/videoList.action";
+		return "redirect:/admin/video/videoList.action";
 	}
 	@RequestMapping("/delteteVideoByNumber.action")
-	public String deleteVideo(Integer[]arr){
-		vs.deleteVideoByArray(arr);
-		return "redirect:/video/videoList.action";
+	@ResponseBody
+	public String deleteVideo(Integer[]checkid){
+		vs.deleteVideoByArray(checkid);
+		return "success";
 	}
 
 }

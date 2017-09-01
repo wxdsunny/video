@@ -17,20 +17,20 @@
 <script
 	src="${pageContext.request.contextPath }/js/jquery-1.12.4.min.js"></script>
 <script src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-    $(function(){
-    	$(".newClass").click(function(){
-    		return confirm("确定要删除这条记录吗");
-		})
-    })
-</script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/css/jquery-confirm.css">
+
+
 </head>
 <body>
+<jsp:include page="/admin.jsp">
+     <jsp:param value="course" name="fromJsp"/>
+   </jsp:include>
 	<div class="container">
 		<div class="jumbotron">
 			<h2>课程列表-课程管理</h2>
 		</div>
-		<a href="${pageContext.request.contextPath }/course/addCourse.action"
+		<a href="${pageContext.request.contextPath }/admin/course/addCourse.action"
 			class="btn btn-primary">添加用户</a>
 		<table class="table table-hover" style="width: 100%; height: 100%;">
 			<thead>
@@ -51,15 +51,43 @@
 						<td>${course.subjectId }</td>
 						<td width="70%">${course.courseDescr }</td>
 						<td><a class="glyphicon glyphicon-edit"
-							href="${pageContext.request.contextPath }/course/updateCourse.action?id=${course.id}"></a></td>
-						<td><a class="glyphicon glyphicon-trash newClass"
-							href="${pageContext.request.contextPath }/course/delleteCourse.action?id=${course.id}"></a></td>
+							href="${pageContext.request.contextPath }/admin/course/updateCourse.action?id=${course.id}"></a></td>
+						<td><a class="glyphicon glyphicon-trash newClass" onclick="deleteOne(this)"
+							id="${course.id}" <%-- href="${pageContext.request.contextPath }/course/delleteCourse.action?id=${course.id}" --%>></a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 		<pg:page
-			url="${pageContext.request.contextPath }/course/courseList.actions"></pg:page>
+			url="${pageContext.request.contextPath }/admin/course/courseList.action"></pg:page>
 	</div>
 </body>
+<script type="text/javascript">
+      function deleteOne(ele){
+	   $.confirm({
+	      title: '提醒!',
+	      content: '确定要删除吗',
+	      buttons: {
+	                  确定删除: function () {
+	            $.get(
+	            		"${pageContext.request.contextPath }/admin/course/delleteCourse.action",
+	            	    {"id":ele.id},
+	                    function(data){
+	                       $.alert('删除成功');
+	                       window.location.reload();
+	                            }
+	            	   );
+	          },
+	                   取消: {
+	              btnClass: 'btn-blue'	   
+	           }
+	      }
+	  }); 
+  };
+    	/* $(".newClass").click(function(){
+    		return confirm("确定要删除这条记录吗");
+		}) */
+</script>
+<script src="${pageContext.request.contextPath }/js/jquery-confirm.js"></script>
+
 </html>

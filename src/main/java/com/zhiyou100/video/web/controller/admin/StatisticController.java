@@ -1,5 +1,6 @@
-package com.zhiyou100.video.web.controller;
+package com.zhiyou100.video.web.controller.admin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import com.zhiyou100.video.mapper.VideoMapper;
 import com.zhiyou100.video.model.Video;
 
 @Controller
-@RequestMapping("/statistic")
+@RequestMapping("/admin/statistic")
 public class StatisticController {
 	
 	@Autowired
@@ -22,12 +23,19 @@ public class StatisticController {
 	
 	@RequestMapping("/statisticList.action")
 	public  String statisticList(){
-		return "statistic/statisticList";
+		return "/admin/statistic/statisticList";
 	}
 	@RequestMapping("/statistic.action")
 	@ResponseBody
 	public  String statistic(){
-		List<Video> list = vm.statisticavg();
+		List<Video> list = new ArrayList<>();
+		List<Video> videos = vm.statisticavg();
+		for (Video video : videos) {
+			if(video.getCourseName()!=null&&video.getAverage()!=0.0){
+				list.add(video);
+			}else{
+			}
+		}
 		ObjectMapper mapper = new ObjectMapper();
 		String json = null;
 		try {

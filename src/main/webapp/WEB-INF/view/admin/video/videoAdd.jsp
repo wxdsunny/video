@@ -19,7 +19,7 @@
 		<div class="jumbotron">
 			<h2>编辑视频信息-视频管理</h2>
 		</div>
-		<form class="form-horizontal" action="${pageContext.request.contextPath }/video/addvideo.action" method="post">
+		<form class="form-horizontal" action="${pageContext.request.contextPath }/admin/video/addvideo.action" method="post">
 			<div class="form-group">
 				<label for="inputEmail3" class="col-sm-2 control-label">视频标题</label>
 				<div class="col-sm-10">

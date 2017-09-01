@@ -31,6 +31,20 @@ public class Video {
 
     private double average;
     
+   private String videoLengthStr;
+    
+    public String getVideoLengthStr() {
+    	Integer hour = this.videoLength / 3600;
+    	Integer minute = this.videoLength % 3600 / 60;
+    	Integer second = this.videoLength % 60;
+    	videoLengthStr = String.format("%02d : %02d : %02d", hour,minute,second);
+		return videoLengthStr;
+	}
+
+	public void setVideoLengthStr(String videoLengthStr) {
+		this.videoLengthStr = videoLengthStr;
+	}
+    
     public double getAverage() {
 		return average;
 	}
